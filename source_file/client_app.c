@@ -13,5 +13,19 @@ void * client_start_app() {
     data.socket = soket.newsockfd;
     read_message(&data, token);
     printf("%s\n",token->response_);
+    bool koniec = false;
+    while (!koniec) {
+        if (system_is_user_authenticated(token)) {
+            system_authentification(data, token);
+        }
+        printf("MENU:\n"
+               " [1] VYPISAT FILMY Z KNIZNICE\n"
+               " [2] ZORADIT FILMY\n"
+               " [3] HLADAT FILM PODLA HERCA\n"
+               " [4] HLADAT FILM PODLA ZANRU\n"
+               " [5] POZICAT SI FILM PODLA ID\n"
+               " [6] VYPISAT MOJU KNIZNICU\n"
+               " [7] VRATIT FILM PODLA ID\n");
 
+    }
 }

@@ -38,4 +38,5 @@ void user_set_password(USER *us, char * password);
 _Bool user_to_token(USER* user, TOKEN * token);
 COMPONENT * remove_component_from_user(USER *us, COMPONENT *cp);
 COMPONENT * add_component_to_user(USER *us, COMPONENT *cp);
+void user_init(USER * user);
 #endif //SEMESTRALNA_PRACA_UDSP_USER_H

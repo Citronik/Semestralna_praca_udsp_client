@@ -1,6 +1,5 @@
 #include <stdio.h>
 #include "header_file/socket_definitions.h"
-#include "header_file/registration_system.h"
 #include "header_file/client_app.h"
 
 #define MAX_POCET_POUZIVATELOV 20
