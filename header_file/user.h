@@ -9,7 +9,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <stdbool.h>
-#include "../header_file/computer_component.h"
+#include "computer_component.h"
 #include "token.h"
 
 #define USER_NAME_LENGTH 50

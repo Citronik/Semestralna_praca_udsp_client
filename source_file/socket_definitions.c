@@ -5,13 +5,10 @@
 
 char *endMsg = ":end";
 
-void data_init(DATA *data, const char* userName, const int socket) {
+void data_init(DATA *data, const int socket) {
     data->socket = socket;
     data->stop = 0;
     data->state = 0;
-    data->userName[USER_LENGTH] = '\0';
-    strncpy(data->userName, userName, USER_LENGTH);
-    pthread_mutex_init(&data->mutex, NULL);
 }
 
 void data_destroy(DATA *data) {

@@ -5,6 +5,14 @@
 #ifndef SEMESTRALNA_PRACA_UDSP_SOCKET_DEFINITIONS_H
 #define SEMESTRALNA_PRACA_UDSP_SOCKET_DEFINITIONS_H
 
+#ifdef	__cplusplus
+extern "C" {
+#endif
+
+#define USER_LENGTH 10
+#define MAX_POCET_POUZIVATELOV 20
+
+#include "token.h"
 #include <pthread.h>
 #include <errno.h>
 #include <stdlib.h>
@@ -17,17 +25,6 @@
 #include <unistd.h>
 #include "socket.h"
 
-
-#ifdef	__cplusplus
-extern "C" {
-#endif
-
-#define USER_LENGTH 10
-#define MAX_POCET_POUZIVATELOV 20
-#include "registration_system.h"
-#include "token.h"
-
-
 extern char *endMsg;
 
 typedef struct data {
@@ -38,7 +35,7 @@ typedef struct data {
     int stop;
 } DATA;
 
-void data_init(DATA *data, const char* userName, const int socket);
+void data_init(DATA *data, const int socket);
 void data_destroy(DATA *data);
 void data_stop(DATA *data);
 int data_isStopped(DATA *data);

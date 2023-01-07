@@ -5,6 +5,7 @@
 #ifndef SEMESTRALNA_PRACA_UDSP_CLIENT_APP_H
 #define SEMESTRALNA_PRACA_UDSP_CLIENT_APP_H
 
+#include "registration_system.h"
 #include "socket_definitions.h"
 #include "user.h"
 #include "token.h"

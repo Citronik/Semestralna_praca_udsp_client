@@ -3,12 +3,8 @@
 //
 #include "../header_file/registration_system.h"
 
-void system_login_form(DATA *pData, USER *pUser, TOKEN *pToken);
-
-void system_registration_form(DATA *pData, USER *pUser, TOKEN *pToken);
-
 _Bool system_is_user_authenticated(TOKEN * token){
-    return token->user_id_ != 0;
+    return token->user_id_ == 0;
 }
 
 USER * system_authentification(DATA * data, TOKEN * token){
@@ -33,5 +29,16 @@ void system_registration_form(DATA *pData, USER *pUser, TOKEN *pToken) {
 }
 
 void system_login_form(DATA *pData, USER *pUser, TOKEN *pToken) {
+    pToken->service_type_ = 2;
+    printf("Enter a username: \n");
+    scanf("%s",pToken->content_);
+
+    printf("Enter the password: \n");
+    scanf("%s",pToken->content_+USER_NAME_LENGTH);
+    send_message(pData, pToken);
+    read_message(pData, pToken);
+    printf("Content %d - %s \n", pToken->service_type_, pToken->content_);
+    printf("Response %d - %s \n", pToken->response_status_, pToken->response_);
+
 
 }
