@@ -28,22 +28,24 @@ USER * system_authentification(DATA * data, TOKEN * token){
 
 void system_registration_form(DATA *pData, USER *pUser, TOKEN *pToken) {
     pToken->service_type_ = 1;
-
+    strcpy(pToken->content_, "User is filling data");
+    send_message(pData, pToken);
+    USER tmp_user;
     printf("Enter a first name: \n");
-    scanf("%s",pToken->content_);
+    scanf("%s",tmp_user.first_name_);
 
     printf("Enter a last name: \n");
-    scanf("%s",pToken->content_);
+    scanf("%s",tmp_user.last_name_);
 
     printf("Enter a username: \n");
-    scanf("%s",pToken->content_);
+    scanf("%s",tmp_user.username_);
 
     printf("Enter the password: \n");
-    scanf("%s", pToken->content_+USER_NAME_LENGTH);
-    send_message(pData, pToken);
-    read_message(pData, pToken);
-    pData->state = read(pData->socket, pUser, sizeof (USER));
+    scanf("%s", tmp_user.password_);
 
+    pData->state = write(pData->socket, &tmp_user, sizeof (USER));
+    pData->state = read(pData->socket, pUser, sizeof (USER));
+    read_message(pData, pToken);
 }
 
 void system_login_form(DATA *pData, USER * pUser, TOKEN *pToken) {
@@ -60,4 +62,17 @@ void system_login_form(DATA *pData, USER * pUser, TOKEN *pToken) {
     printf("Token ID : %d | Content %d - %s \n" , pToken->user_id_, pToken->service_type_, pToken->content_);
     printf("Response %d - %s \n", pToken->response_status_, pToken->response_);
     printf("user id: %d - %s \n", pUser->id_, pUser->first_name_);
+}
+
+void system_print_all_components(DATA * data, TOKEN * token){
+    token->service_type_ = 3;
+    send_message(data, token);
+
+    printf("COMPONENTS FOR SALE\n");
+    while (token->service_type_ <= token->response_status_ && strcmp(token->response_, "END") != 0){
+        read_message(data, token);
+        printf("COMPONENT num: [%d] from\n", token->service_type_);
+        printf("%s", token->content_);
+    }
+    printf("COMPONENTS ARE PRINTED\n");
 }

@@ -32,10 +32,9 @@ int data_isStopped(DATA *data) {
 int send_message(DATA * data, TOKEN * token) {
     data->state = write(data->socket, token, sizeof (TOKEN));
     printf("Sending message: n = [%d]\n",data->state);
-
     if (data->state < 0) {
         perror("[-]Error writing to socket");
-        return 5;
+        exit(1);
     }
     return 0;
 }
@@ -45,7 +44,7 @@ int read_message(DATA * data, TOKEN * token) {
     printf("Message received: n = [%d]\n",data->state);
     if (data->state < 0) {
         perror("[-]Error reading from socket");
-        return 6;
+        exit(1);
     }
     return 0;
 }

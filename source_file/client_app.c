@@ -22,13 +22,39 @@ void * client_start_app() {
             printf("MENU:\n"
                    " [1] DISPLAY COMPONENTS\n"
                    " [2] SORT COMPONENTS\n"
-                   " [3] FIND COMPONENTS\n"
-                   " [4] DISPLAY YOUR CARTS\n"
-                   " [5] RETURN COMPONENT\n"
-                   " [6] EXIT\n");
+                   " [3] BUY COMPONENT\n"
+                   " [4] RETURN COMPONENT\n"
+                   " [5] DISPLAY YOUR COMPONENTS\n"
+                   " [6] LOGOUT\n"
+                   " [10] EXIT\n");
             scanf("%d",&result);
         }
-
+        switch (result) {
+            case 1:
+                //DISPLAY COMPONENTS
+                system_print_all_components(data , token);
+                break;
+            case 2:
+                //SORT COMPONENTS
+                break;
+            case 3:
+                //BUY COMPONENT
+                break;
+            case 4:
+                //RETURN COMPONENT
+                break;
+            case 5:
+                //DISPLAY YOUR COMPONENTS
+                break;
+            case 6:
+                //LOGOUT
+                break;
+            case 10:
+                //EXIT
+                break;
+            default:
+                break;
+        }
 
     }
 }
