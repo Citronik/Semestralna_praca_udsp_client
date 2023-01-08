@@ -7,7 +7,8 @@ void * client_start_app() {
     TOKEN * token = malloc(sizeof(TOKEN));
     token_init(token);
     SOCKET soket;
-    client_socket_started(&soket, "127.0.0.1", 11111);
+    USER * user;
+    client_socket_started(&soket, "127.0.0.1", 11112);
     DATA * data = malloc(sizeof(DATA));
     data_init(data,soket.newsockfd);
     read_message(data, token);
@@ -16,17 +17,18 @@ void * client_start_app() {
     int result = 0;
     while (!koniec) {
         if (system_is_user_authenticated(token)) {
-            system_authentification(data, token);
+            user = system_authentification(data, token);
         } else {
             printf("MENU:\n"
-                   " [1] VYPISAT FILMY Z KNIZNICE\n"
-                   " [2] ZORADIT FILMY\n"
-                   " [3] HLADAT FILM PODLA HERCA\n"
-                   " [4] HLADAT FILM PODLA ZANRU\n"
-                   " [5] POZICAT SI FILM PODLA ID\n"
-                   " [6] VYPISAT MOJU KNIZNICU\n"
-                   " [7] VRATIT FILM PODLA ID\n");
+                   " [1] DISPLAY COMPONENTS\n"
+                   " [2] SORT COMPONENTS\n"
+                   " [3] FIND COMPONENTS\n"
+                   " [4] DISPLAY YOUR CARTS\n"
+                   " [5] RETURN COMPONENT\n"
+                   " [6] EXIT\n");
             scanf("%d",&result);
         }
+
+
     }
 }
