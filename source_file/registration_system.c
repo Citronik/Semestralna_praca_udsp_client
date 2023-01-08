@@ -76,3 +76,13 @@ void system_print_all_components(DATA * data, TOKEN * token){
     }
     printf("COMPONENTS ARE PRINTED\n");
 }
+
+void system_user_unathorize(DATA * data, TOKEN * token, USER * user){
+    token->service_type_ = 9;
+    send_message(data, token);
+    data->state = write(data->socket, user, sizeof (USER));
+    read_message(data, token);
+    data->state = read(data->socket, user, sizeof (USER));
+    read_message(data, token);
+    printf("USER LOGGED OUT %d, response: %c\n", token->user_id_, token->response_);
+}
