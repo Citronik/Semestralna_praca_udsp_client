@@ -68,11 +68,15 @@ void system_print_all_components(DATA * data, TOKEN * token){
     token->service_type_ = 3;
     send_message(data, token);
 
+    token->response_status_ = RAND_MAX;
+    strcpy(token->response_, "NOT END");
     printf("COMPONENTS FOR SALE\n");
     while (token->service_type_ <= token->response_status_ && strcmp(token->response_, "END") != 0){
         read_message(data, token);
-        printf("COMPONENT num: [%d] from\n", token->service_type_);
-        printf("%s", token->content_);
+        if (strcmp(token->response_, "END") != 0) {
+            printf("COMPONENT num: [%d] from\n", token->service_type_);
+            printf("%s", token->content_);
+        }
     }
     printf("COMPONENTS ARE PRINTED\n");
 }
@@ -85,4 +89,45 @@ void system_user_unathorize(DATA * data, TOKEN * token, USER * user){
     data->state = read(data->socket, user, sizeof (USER));
     read_message(data, token);
     printf("USER LOGGED OUT %d, response: %c\n", token->user_id_, token->response_);
+}
+
+void system_sort_components(DATA * data, TOKEN * token){
+    token->service_type_ = 4;
+    int result = 0;
+    do {
+        printf("HOW DO YOU WANT TO SORT THE COMPONENTS:\n"
+               " [1] BY PRICE\n"
+               " [2] BY MODEL\n"
+               " [3] BY YEAR\n");
+        scanf("%d",&result);
+    } while (!(result == 1 || result == 2 || result == 3));
+    token->response_status_ = result;
+    send_message(data, token);
+}
+
+void system_find_component_by_identifier(DATA * data, TOKEN * token){
+    token->service_type_ = 8;
+    char keyword[CONTENT_LENGTH] = {0};
+    printf("WRITE A KEYWORD SO WE CAN HELP YOU FIND COMPONENT FOR YOU: \n");
+    scanf("%s",keyword);
+    strcpy(token->content_,keyword);
+    send_message(data, token);
+
+    token->response_status_ = RAND_MAX;
+    strcpy(token->response_, "NOT END");
+    printf("COMPONENTS FOR SALE\n");
+    while (token->service_type_ <= token->response_status_ && strcmp(token->response_, "END") != 0){
+        read_message(data, token);
+        if (strcmp(token->response_, "END") != 0) {
+            printf("COMPONENT num: [%d] from\n", token->service_type_);
+            printf("%s", token->content_);
+        }
+    }
+    printf("COMPONENTS ARE PRINTED\n");
+}
+
+void system_print_user_components(USER *user, DATA *data, TOKEN *token){
+    token->service_type_ = 7;
+    send_message(data, token);
+
 }

@@ -8,7 +8,7 @@ void * client_start_app() {
     token_init(token);
     SOCKET soket;
     USER * user;
-    client_socket_started(&soket, "127.0.0.1", 11111);
+    client_socket_started(&soket, "127.0.0.1", 11112);
     DATA * data = malloc(sizeof(DATA));
     data_init(data,soket.newsockfd);
     read_message(data, token);
@@ -36,6 +36,8 @@ void * client_start_app() {
                     break;
                 case 2:
                     //SORT COMPONENTS
+                    system_sort_components(data , token);
+                    system_print_all_components(data , token);
                     break;
                 case 3:
                     //BUY COMPONENT
@@ -45,9 +47,11 @@ void * client_start_app() {
                     break;
                 case 5:
                     //DISPLAY YOUR COMPONENTS
+                    system_print_user_components(user, data, token);
                     break;
                 case 6:
                     //FIND COMPONENTS
+                    system_find_component_by_identifier(data, token);
                     break;
                 case 7:
                     //LOGOUT
