@@ -7,8 +7,8 @@ void * client_start_app() {
     TOKEN * token = malloc(sizeof(TOKEN));
     token_init(token);
     SOCKET soket;
-    USER * user;
-    client_socket_started(&soket, "127.0.0.1", 11112);
+    USER * user = malloc(sizeof(USER));
+    client_socket_started(&soket, "127.0.0.1", 11111);
     DATA * data = malloc(sizeof(DATA));
     data_init(data,soket.newsockfd);
     read_message(data, token);
@@ -59,6 +59,9 @@ void * client_start_app() {
                     break;
                 case 10:
                     //EXIT
+                    system_user_unathorize(data, token, user);
+
+                    koniec = true;
                     break;
                 default:
                     break;

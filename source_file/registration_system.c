@@ -129,5 +129,13 @@ void system_find_component_by_identifier(DATA * data, TOKEN * token){
 void system_print_user_components(USER *user, DATA *data, TOKEN *token){
     token->service_type_ = 7;
     send_message(data, token);
-
+    read_message(data, token);
+    if (token->response_status_ == 200){
+        data->state = read(data->socket, user, sizeof (USER));
+        for (int i = 0; i < user->number_of_owned_components_; ++i) {
+            char cmp[BUFFER] = {0};
+            component_to_string(&user->owned_components_[i], cmp);
+            printf("%s\n", cmp);
+        }
+    }
 }
