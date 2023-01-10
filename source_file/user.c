@@ -71,7 +71,13 @@ COMPONENT * remove_component_from_user(USER *us, COMPONENT *cp) {
 
 
 char* user_to_string(const USER *us, char *dest) {
-    sprintf(dest, "User: %s %s, username:  %s, id: %d, credit: %lf€  \n",us->first_name_,us->last_name_,us->username_,us->id_, us->credit_);
+    sprintf(dest, "|¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯|\n"
+                  " [id]:       %d      \n"
+                  " [User]:     %s %s   \n"
+                  " [Username]: %s      \n"
+                  " [Credit]:   %.2f€   \n"
+                  "|_______________________________|\n"
+                  , us->id_,us->first_name_,us->last_name_,us->username_, us->credit_);
     return dest;
 }
 

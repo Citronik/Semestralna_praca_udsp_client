@@ -8,7 +8,7 @@ void * client_start_app() {
     token_init(token);
     SOCKET soket;
     USER * user = malloc(sizeof(USER));
-    client_socket_started(&soket, "127.0.0.1", 11111);
+    client_socket_started(&soket, "127.0.0.1", 11112);
     DATA * data = malloc(sizeof(DATA));
     data_init(data,soket.newsockfd);
     read_message(data, token);
@@ -19,15 +19,20 @@ void * client_start_app() {
         if (system_is_user_authenticated(token)) {
             user = system_authentification(data, token);
         } else {
-            printf("MENU:\n"
-                   " [1] DISPLAY COMPONENTS\n"
-                   " [2] SORT COMPONENTS\n"
-                   " [3] BUY COMPONENT\n"
-                   " [4] RETURN COMPONENT\n"
-                   " [5] DISPLAY YOUR COMPONENTS\n"
-                   " [6] FIND COMPONENTS\n"
-                   " [7] LOGOUT\n"
-                   " [10] EXIT\n");
+            printf("  MENU[%s]:\n"
+                   "|¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯|\n"
+                   "|  [1]  DISPLAY COMPONENTS      |\n"
+                   "|  [2]  SORT COMPONENTS         |\n"
+                   "|  [3]  BUY COMPONENT           |\n"
+                   "|  [4]  RETURN COMPONENT        |\n"
+                   "|  [5]  DISPLAY YOUR COMPONENTS |\n"
+                   "|  [6]  FIND COMPONENTS         |\n"
+                   "|  [7]  LOGOUT                  |\n"
+                   "|  [8]  TOP UP CREDIT           |\n"
+                   "|  [9]  USER INFO               |\n"
+                   "|  [10] EXIT                    |\n"
+                   "|_______________________________|\n"
+                   , user->username_);
             scanf("%d",&result);
             switch (result) {
                 case 1:
@@ -64,6 +69,12 @@ void * client_start_app() {
                 case 8:
                     //TOP UP CREDIT
                     system_user_top_up_credit(data, token, user);
+                    //printf("%s\n", token->content_);
+                    break;
+                case 9:
+                    //INFO ABOUT USER
+                    user_to_string(user, token->content_);
+                    printf("%s\n", token->content_);
                     break;
                 case 10:
                     //EXIT
@@ -73,6 +84,8 @@ void * client_start_app() {
                     koniec = true;
                     break;
                 default:
+                    //warning message
+                    printf("[+]Wrong key\n");
                     break;
             }
         }

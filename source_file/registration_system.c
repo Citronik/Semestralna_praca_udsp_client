@@ -74,8 +74,11 @@ void system_print_all_components(DATA * data, TOKEN * token){
     while (token->service_type_ <= token->response_status_ && strcmp(token->response_, "END") != 0){
         read_message(data, token);
         if (strcmp(token->response_, "END") != 0) {
-            printf("COMPONENT num: [%d] from\n", token->service_type_);
-            printf("%s", token->content_);
+            printf("COMPONENT num: [%d]\n", token->service_type_);
+            printf("[%d]%s", token->service_type_, token->content_);
+            if (token->service_type_%3 == 0) {
+                printf("\n");
+            }
         }
     }
     printf("COMPONENTS ARE PRINTED\n");
@@ -136,7 +139,10 @@ void system_print_user_components(USER *user, DATA *data, TOKEN *token){
         for (int i = 0; i < user->number_of_owned_components_; ++i) {
             char cmp[BUFFER] = {0};
             component_to_string(&user->owned_components_[i], cmp);
-            printf("[%d] %s\n", i, cmp);
+            printf("[%d] %s", i, cmp);
+            if (i%3 == 0) {
+                printf("\n");
+            }
         }
     }
     printf("%s\n", token->response_);
@@ -170,6 +176,26 @@ void system_return_component(DATA * data, TOKEN * token, USER *user){
     data->state = read(data->socket, user, sizeof (USER));
 }
 
-_Bool system_user_top_up_credit(DATA * data, TOKEN * token, USER *user){
-
+void system_user_top_up_credit(DATA * data, TOKEN * token, USER *user){
+    token->service_type_ = 10;
+    double credit = 0;
+    do {
+        memset(token->content_, 0 , sizeof(token->content_));
+        printf("WRITE HOW MUCH CREDIT DO YOU WANT ADD\n");
+        scanf("%lf",&credit);
+        if (credit > 0) {
+            sprintf(token->content_, "%lf", credit);
+        }
+    } while (strlen(token->content_) <= 0);
+    send_message(data, token);
+    read_message(data, token);
+    if (token->response_status_ != 200){
+        printf("%s\n", token->response_);
+        return;
+    }
+    data->state = read(data->socket, user, sizeof(USER));
+    printf("CREDIT WAS SUCCESSFULLY TOPPED UP\n");
+    char buff[BUFFER] = {0};
+    user_to_string(user, buff);
+    printf("%s\n", buff);
 }

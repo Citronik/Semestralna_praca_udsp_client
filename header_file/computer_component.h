@@ -11,7 +11,7 @@
 #include <stdbool.h>
 
 #define CHARACTERS 50
-#define BUFFER 150
+#define BUFFER 400
 typedef struct component {
     char manufacturer_[CHARACTERS];
     char type_[CHARACTERS];
