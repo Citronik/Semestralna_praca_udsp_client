@@ -132,10 +132,44 @@ void system_print_user_components(USER *user, DATA *data, TOKEN *token){
     read_message(data, token);
     if (token->response_status_ == 200){
         data->state = read(data->socket, user, sizeof (USER));
+        printf("%d\n", user->id_);
         for (int i = 0; i < user->number_of_owned_components_; ++i) {
             char cmp[BUFFER] = {0};
             component_to_string(&user->owned_components_[i], cmp);
-            printf("%s\n", cmp);
+            printf("[%d] %s\n", i, cmp);
         }
     }
+    printf("%s\n", token->response_);
+}
+
+void system_buy_components(DATA * data, TOKEN * token, USER * user){
+    token->service_type_ = 5;
+    printf("WRITE NUMBER OF COMPONET  YOU WANT TO BUY\n");
+    scanf("%d",&token->response_status_);
+    send_message(data, token);
+    read_message(data, token);
+    if (token->response_status_ != 404){
+        data->state = read(data->socket, user, sizeof (USER));
+        printf("[+]COMPONENT: %s SUCCESFULLY ADDED TO USER: %d!\n"
+                , user->owned_components_[user->number_of_owned_components_-1].model_
+                , user->id_);
+    }
+    printf("%s\n", token->response_);
+}
+
+void system_return_component(DATA * data, TOKEN * token, USER *user){
+    token->service_type_ = 6;
+    printf("WRITE NUMBER OF COMPONET  YOU WANT TO RETURN\n");
+    scanf("%d",&token->response_status_);
+    send_message(data, token);
+    read_message(data, token);
+    printf("%s\n", token->response_);
+    if (token->response_status_ != 200){
+        return;
+    }
+    data->state = read(data->socket, user, sizeof (USER));
+}
+
+_Bool system_user_top_up_credit(DATA * data, TOKEN * token, USER *user){
+
 }

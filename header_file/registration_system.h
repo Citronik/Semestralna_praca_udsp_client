@@ -18,5 +18,8 @@ void system_user_unathorize(DATA * data, TOKEN * token, USER * user);
 void system_sort_components(DATA * data, TOKEN * token);
 void system_find_component_by_identifier(DATA * data, TOKEN * token);
 void system_print_user_components(USER *user, DATA *data, TOKEN *token);
+void system_buy_components(DATA * data, TOKEN * token, USER * user);
+void system_return_component(DATA * data, TOKEN * token, USER *user);
+_Bool system_user_top_up_credit(DATA * data, TOKEN * token, USER *user);
 
 #endif //SEMESTRALNA_PRACA_UDSP_KLIENT_REGISTRATION_SYSTEM_H

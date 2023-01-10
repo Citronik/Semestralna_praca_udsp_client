@@ -41,9 +41,13 @@ void * client_start_app() {
                     break;
                 case 3:
                     //BUY COMPONENT
+                    system_buy_components(data, token, user);
                     break;
                 case 4:
                     //RETURN COMPONENT
+                    system_print_user_components(user, data, token);
+                    system_return_component(data, token, user);
+                    system_print_user_components(user, data, token);
                     break;
                 case 5:
                     //DISPLAY YOUR COMPONENTS
@@ -57,10 +61,15 @@ void * client_start_app() {
                     //LOGOUT
                     system_user_unathorize(data, token, user);
                     break;
+                case 8:
+                    //TOP UP CREDIT
+                    system_user_top_up_credit(data, token, user);
+                    break;
                 case 10:
                     //EXIT
                     system_user_unathorize(data, token, user);
-
+                    token->service_type_ = 0;
+                    send_message(data, token);
                     koniec = true;
                     break;
                 default:
@@ -68,4 +77,11 @@ void * client_start_app() {
             }
         }
     }
+    free(token);
+    token = NULL;
+    free(user);
+    user = NULL;
+    free(data);
+    data = NULL;
+
 }

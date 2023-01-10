@@ -23,6 +23,6 @@ _Bool compare_components(const COMPONENT *cp1, const COMPONENT *cp2){
 
 
 char* component_to_string(const COMPONENT *cp, char *dest) {
-    sprintf(dest, "Manufacturer: %s, type: %s, model: %s, year of production: %d, price: %lf€  \n",cp->manufacturer_,cp->type_,cp->model_,cp->year_of_production_,cp->price_);
+    sprintf(dest, "Manufacturer: %s, type: %s, model: %s, year of production: %d, price: %.2f€  \n",cp->manufacturer_,cp->type_,cp->model_,cp->year_of_production_,cp->price_);
     return dest;
 }
